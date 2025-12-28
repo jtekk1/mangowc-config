@@ -1,16 +1,26 @@
 #!/usr/bin/bash
 set +e
 
-# Set desktop environment for blueberry and other apps
+pkill -x xdg-desktop-portal-wlr
+pkill -x xdg-desktop-portal-gtk
+pkill -x xdg-desktop-portal
+
+# Set desktop environment for other apps
 export XDG_CURRENT_DESKTOP=wlroots
 export XDG_SESSION_TYPE=wayland
 export WAYLAND_DISPLAY="${WAYLAND_DISPLAY:-wayland-0}"
 
 # Update dbus environment for portals and other services
-dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XCURSOR_THEME XCURSOR_SIZE
+dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE
 
-# Night light filter
-# wlsunset -T 4501 -t 4500 >/dev/null 2>&1 &
+/usr/libexec/xdg-desktop-portal-wlr &
+sleep 1
 
-# Authentication agent
-# polkit-gnome-authentication-agent-1 >/dev/null 2>&1 &
+/usr/libexec/xdg-desktop-portal-gtk &
+sleep 1
+
+/usr/libexec/xdg-desktop-portal &
+
+if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+  export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+fi
