@@ -1,9 +1,13 @@
 #!/usr/bin/bash
 set +e
 
-pkill -x xdg-desktop-portal-wlr
-pkill -x xdg-desktop-portal-gtk
-pkill -x xdg-desktop-portal
+if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+  export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+fi
+
+pkill -f xdg-desktop-portal-wlr
+pkill -f xdg-desktop-portal-gtk
+pkill -f xdg-desktop-portal
 
 # Set desktop environment for other apps
 export XDG_CURRENT_DESKTOP=wlroots
@@ -20,7 +24,3 @@ sleep 1
 sleep 1
 
 /usr/libexec/xdg-desktop-portal &
-
-if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
-  export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
-fi
