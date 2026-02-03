@@ -17,10 +17,10 @@ export WAYLAND_DISPLAY="${WAYLAND_DISPLAY:-wayland-0}"
 # Update dbus environment for portals and other services
 dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_RUNTIME_DIR
 
-dinitctl --user setenv WAYLAND_DISPLAY="$WAYLAND_DISPLAY"
-dinitctl --user setenv DISPLAY="$DISPLAY"
-dinitctl --user setenv XDG_RUNTIME_DIR="$XDG_RUNTIME_DIR"
-dinitctl --user setenv XDG_CURRENT_DESKTOP="$XDG_CURRENT_DESKTOP"
+# dinitctl --user setenv WAYLAND_DISPLAY="$WAYLAND_DISPLAY"
+# dinitctl --user setenv DISPLAY="$DISPLAY"
+# dinitctl --user setenv XDG_RUNTIME_DIR="$XDG_RUNTIME_DIR"
+# dinitctl --user setenv XDG_CURRENT_DESKTOP="$XDG_CURRENT_DESKTOP"
 
 /usr/libexec/xdg-desktop-portal-wlr &
 sleep 1
