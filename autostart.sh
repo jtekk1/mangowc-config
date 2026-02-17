@@ -1,9 +1,5 @@
 #!/usr/bin/bash
-set +e
-
-if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
-	export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
-fi
+set -e
 
 pkill -f xdg-desktop-portal-wlr
 pkill -f xdg-desktop-portal-gtk
